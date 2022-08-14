@@ -12,9 +12,17 @@ from .models import Members
 #     template = loader.get_template('myfirst.html')
 #     return HttpResponse(template.render())
 
+# def index(request):
+#     mymembers = Members.objects.all().values()
+#     output = "" # define empty output
+#     for x in mymembers:
+#        output += x["firstname"] # Members model have firstname and lastname fields
+#     return HttpResponse(output)
+
 def index(request):
+    template = loader.get_template('index.html')
     mymembers = Members.objects.all().values()
-    output = "" # define empty output
-    for x in mymembers:
-        output += x["firstname"] # Members model have firstname and lastname fields
-    return HttpResponse(output)
+    context = {
+        'mymembers' : mymembers,
+    }
+    return HttpResponse(template.render(context, request))
